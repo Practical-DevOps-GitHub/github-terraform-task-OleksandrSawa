@@ -1,7 +1,12 @@
 # Настройка провайдера GitHub
-provider "github" {
-  token = "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"
+variable "PAT" {
+  type        = string
+  description = "GitHub Personal Access Token"
 }
+provider "github" {
+  token = var.PAT
+}
+
 resource "github_repository" "repo" {
   name   = "github-terraform-task-OleksandrSawa"
 }
