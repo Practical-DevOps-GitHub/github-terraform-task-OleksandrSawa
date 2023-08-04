@@ -1,6 +1,6 @@
 # Настройка провайдера GitHub
 provider "github" {
-  token = "gp_inrg7Y5ZKfeRXvYgcgj60WXyqfEcgi36Pr1c"
+  token = "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"
 }
 resource "github_repository" "repo" {
   name   = "github-terraform-task-OleksandrSawa"
