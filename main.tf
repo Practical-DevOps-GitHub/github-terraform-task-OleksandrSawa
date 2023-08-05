@@ -1,7 +1,8 @@
 # Настройка провайдера GitHub
 variable "pat" {
   type        = string
-  default       = "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"
+  description = "GitHub Personal Access Token"
+#  default       = "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"
 }
 provider "github" {
   token = var.pat
@@ -23,11 +24,11 @@ resource "github_repository_collaborator" "softservedata_collaborator" {
 }
 
 # Ресурс для настройки защиты ветки main
-resource "github_branch_protection" "main_protection" {
-  repository_id = data.github_repository.repo.id
-  pattern    = "main"
-  enforce_admins = true
-}
+#resource "github_branch_protection" "main_protection" {
+ # repository_id = data.github_repository.repo.id
+  #pattern    = "main"
+  #enforce_admins = true
+#}
 
 # Ресурс для настройки защиты ветки develop
 resource "github_branch_protection" "develop_protection" {
