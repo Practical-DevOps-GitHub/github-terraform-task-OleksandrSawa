@@ -11,7 +11,7 @@ data "github_repository" "repo" {
 variable "pat" {
   type        = string
   description = "GitHub Personal Access Token"
-  default     = "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"
+  default     = ""
 }
 
 # Ресурс для установки ветки по умолчанию
@@ -49,22 +49,6 @@ resource "github_branch_protection" "develop_protection" {
 }
 
 # Ресурс для добавления шаблона запроса на слияние
-## resource "github_repository_file" "pull_request_template" {
- ##  repository = data.github_repository.repo.id
-##   file       = ".github/pull_request_template.md"
-##   content    = <<-EOT
-## Describe your changes
-
-## Issue ticket number and link
-
-## Checklist before requesting a review
-## - [ ] I have performed a self-review of my code
-## - [ ] If it is a core feature, I have added thorough tests
-## - [ ] Do we need to implement analytics?
-## - [ ] Will this be part of a product update? If yes, please write one phrase about this update
- ##  EOT
- ##  overwrite_on_create  = true
-## }
 resource "github_repository_file" "pull_request_template" {
   content             = <<EOT
   ## Describe your changes
@@ -76,10 +60,10 @@ resource "github_repository_file" "pull_request_template" {
 [ ] Do we need to implement analytics?
 [ ] Will this be part of a product update? If yes, please write one phrase about this update
 EOT
-file                = ".github/pull_request_template.md"
-repository          = data.github_repository.repo.id
-overwrite_on_create = true
-branch              = "main"
+  file                = ".github/pull_request_template.md"
+  repository          = data.github_repository.repo.id
+  overwrite_on_create = true
+  branch              = "main"
 }
 
 # Ресурс для добавления deploy key
