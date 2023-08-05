@@ -66,7 +66,7 @@ resource "github_repository_file" "pull_request_template" {
 resource "github_repository_deploy_key" "deploy_key" {
   repository = data.github_repository.repo.name
   title      = "DEPLOY_KEY"
-  key        = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBTcJlWp/yumhp1VVzaB4KV1RcEDv0vrgPLMSalEdVXy sawok@DESKTOP-TAGIO1T"
+  key        = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBTcJlWp/yumhp1VVzaB4KV1RcEDv0vrgPLMSalEdVXy"
 }
 # Ресурс для создания Discord webhook
 resource "github_repository_webhook" "discord_webhook" {
