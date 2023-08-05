@@ -23,12 +23,12 @@ resource "github_repository_collaborator" "softservedata_collaborator" {
   permission = "push" 
 }
 
-# Ресурс для настройки защиты ветки main
-#resource "github_branch_protection" "main_protection" {
- # repository_id = data.github_repository.repo.id
-  #pattern    = "main"
-  #enforce_admins = true
-#}
+#Ресурс для настройки защиты ветки main
+resource "github_branch_protection" "main_protection" {
+  repository_id   = data.github_repository.repo.id
+  pattern         = "main"
+  enforce_admins  = true
+}
 
 # Ресурс для настройки защиты ветки develop
 resource "github_branch_protection" "develop_protection" {
