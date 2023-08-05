@@ -1,37 +1,37 @@
 # Настройка провайдера GitHub
-variable "PAT" {
+variable "pat" {
   type        = string
-  description = "GitHub Personal Access Token"
+  default       = "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"
 }
 provider "github" {
-  token = var.PAT
+  token = var.pat
 }
 
-resource "github_repository" "repo" {
-  name   = "github-terraform-task-OleksandrSawa"
+data "github_repository" "repo" {
+  full_name   = "OleksandrSawa/github-terraform-task-OleksandrSawa"
 }
 # Ресурс для установки ветки по умолчанию
 resource "github_branch_default" "default_branch" {
-  repository = github_repository.repo.name
-  branch     = "main"
+  repository = data.github_repository.repo.name
+  branch     = "develop"
 }
 # Ресурс для добавления соавтора
 resource "github_repository_collaborator" "softservedata_collaborator" {
-  repository = github_repository.repo.name
+  repository = data.github_repository.repo.name
   username   = "softservedata"
-  permission = "push" # или "admin", в зависимости от требуемых прав доступа
+  permission = "push" 
 }
 
 # Ресурс для настройки защиты ветки main
 resource "github_branch_protection" "main_protection" {
-  repository_id = github_repository.repo.id
+  repository_id = data.github_repository.repo.id
   pattern    = "main"
   enforce_admins = true
 }
 
 # Ресурс для настройки защиты ветки develop
 resource "github_branch_protection" "develop_protection" {
-  repository_id = github_repository.repo.id
+  repository_id = data.github_repository.repo.id
   pattern       = "develop"
 
   required_pull_request_reviews {
@@ -46,7 +46,7 @@ resource "github_branch_protection" "develop_protection" {
 
 # Ресурс для добавления шаблона запроса на слияние
 resource "github_repository_file" "pull_request_template" {
-  repository = github_repository.repo.id
+  repository = data.github_repository.repo.id
   file       = ".github/pull_request_template.md"
   content    = <<-EOT
 ## Describe your changes
@@ -63,13 +63,13 @@ resource "github_repository_file" "pull_request_template" {
 
 #rесурс для добавления deploy key
 resource "github_repository_deploy_key" "deploy_key" {
-  repository = github_repository.repo.name
+  repository = data.github_repository.repo.name
   title      = "DEPLOY_KEY"
   key        = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBTcJlWp/yumhp1VVzaB4KV1RcEDv0vrgPLMSalEdVXy sawok@DESKTOP-TAGIO1T"
 }
 # Ресурс для создания Discord webhook
 resource "github_repository_webhook" "discord_webhook" {
-  repository = github_repository.repo.id
+  repository = data.github_repository.repo.id
   events     = ["pull_request"]
   configuration {
     url = "https://discord.com/api/webhooks/1136733262912438312/XWgFaVF7QRqfcVxcXisRepJkhZnI4_CGCrr5rNc0_jffICkuyjP2PbvONp9Vhdi64n4a/github"
