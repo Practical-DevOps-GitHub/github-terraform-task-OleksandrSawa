@@ -11,7 +11,7 @@ data "github_repository" "repo" {
 variable "pat" {
   type        = string
   description = "GitHub Personal Access Token"
-  default     = "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"
+  default     = "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"
 }
 
 # Ресурс для установки ветки по умолчанию
